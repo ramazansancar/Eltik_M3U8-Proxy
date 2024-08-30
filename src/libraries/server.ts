@@ -619,7 +619,11 @@ export async function proxyM3U8(url: string, headers: any, res: http.ServerRespo
                 if(!uri.href.includes('http')){
                     uri.href = baseUrl + uri.href;
                 }
-                newLines.push(`${web_server_url}${"/ts-proxy?url=" + encodeURIComponent(uri.href) + "&headers=" + encodeURIComponent(JSON.stringify(headers))}`);
+                if(uri.href.includes('m3u8')){
+                    newLines.push(`${web_server_url + "/m3u8-proxy?url=" + encodeURIComponent(uri.href) + "&headers=" + encodeURIComponent(JSON.stringify(headers))}`);
+                }else{
+                    newLines.push(`${web_server_url}${"/ts-proxy?url=" + encodeURIComponent(uri.href) + "&headers=" + encodeURIComponent(JSON.stringify(headers))}`);
+                }
             }
         }
 
@@ -672,6 +676,7 @@ export async function proxyTs(url: string, headers: any, req, res: http.ServerRe
             ...headers,
         },
     };
+    console.log(options)
 
     // Proxy request and pipe to client
     try {
