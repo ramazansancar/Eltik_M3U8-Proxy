@@ -435,6 +435,8 @@ const host = process.env.HOST || "0.0.0.0";
 const port = process.env.PORT || 8080;
 const web_server_url = process.env.PUBLIC_URL || `http://${host}:${port}`;
 
+let baseUrl = '';
+
 export default function server() {
     const originBlacklist = parseEnvList(process.env.CORSANYWHERE_BLACKLIST);
     const originWhitelist = parseEnvList(process.env.CORSANYWHERE_WHITELIST);
@@ -553,6 +555,7 @@ function createRateLimitChecker(CORSANYWHERE_RATELIMIT) {
  * @param res Server response object
  */
 export async function proxyM3U8(url: string, headers: any, res: http.ServerResponse) {
+    baseUrl = (url.includes("http") ? "" : "http://") + new URL(url).hostname + "/";
     const req = await axios(url, {
         headers: headers,
     }).catch((err) => {
@@ -613,6 +616,9 @@ export async function proxyM3U8(url: string, headers: any, res: http.ServerRespo
                 // CORS is needed since the TS files are not on the same domain as the client.
                 // This replaces each TS file to use a TS proxy with the headers attached.
                 // So each TS request will use the headers inputted to the proxy
+                if(!uri.href.includes('http')){
+                    uri.href = baseUrl + uri.href;
+                }
                 newLines.push(`${web_server_url}${"/ts-proxy?url=" + encodeURIComponent(uri.href) + "&headers=" + encodeURIComponent(JSON.stringify(headers))}`);
             }
         }
