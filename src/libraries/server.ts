@@ -647,6 +647,10 @@ export async function proxyTs(url: string, headers: any, req, res: http.ServerRe
     // I love how NodeJS HTTP request client only takes http URLs :D It's so fun!
     // I'll probably refactor this later.
 
+    if(!url.includes('http')){
+        url = baseUrl + url;
+    }
+
     let forceHTTPS = false;
 
     if (url.startsWith("https://")) {
