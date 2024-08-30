@@ -28,9 +28,11 @@
         <h1>Very bad playground design but its fine</h1>
         <p>basically put in an m3u8 for the url, and put stringified headers into the headers section. yeah thats it.</p>
         <label for="url">URL</label>
-        <input type="text" id="url" style="width:300px;" value="https://ojkx.vizcloud.co/simple/EqPFJvsQWADtjDlGha7rC8UurFwHuLiwTk17rqk+wYMnU94US2El_Po4w12gXe6GptOSQtc/br/list.m3u8#.mp4" /><br>
+        <input type="text" id="url" style="width:500px;" value="https://ojkx.vizcloud.co/simple/EqPFJvsQWADtjDlGha7rC8UurFwHuLiwTk17rqk+wYMnU94US2El_Po4w12gXe6GptOSQtc/br/list.m3u8#.mp4" /><br>
         <label for="headers">Headers</label>
-        <textarea id="headers">{"referer": "https://9anime.pl"}</textarea><br>
+        <textarea id="headers" style="width: 400px;height: 100px;">{
+            "referer": "https://9anime.pl"
+        }</textarea><br>
         <button onclick="test()">Test</button><br><br>
         <video id="hls" controls></video>
         <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
